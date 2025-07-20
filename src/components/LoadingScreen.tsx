@@ -21,7 +21,7 @@ const LoadingScreen: React.FC = () => {
           transition={{ delay: 0.5 }}
           className="text-3xl font-bold text-white mb-2"
         >
-          AI Tools Hub
+          AI Flow
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}

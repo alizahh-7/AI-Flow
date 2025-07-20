@@ -249,9 +249,9 @@ const Contact: React.FC = () => {
                   className="w-20 h-20 rounded-full object-cover"
                 />
                 <div>
-                  <h3 className="text-2xl font-semibold">Alex Johnson</h3>
+                  <h3 className="text-2xl font-semibold">Bindupautra Jyotibrat</h3>
                   <p className="text-purple-400">Project Admin & Lead Developer</p>
-                  <p className="text-gray-400 text-sm mt-1">AI Tools Hub</p>
+                  <p className="text-gray-400 text-sm mt-1">AI Flow</p>
                 </div>
               </div>
               <p className="text-gray-300 mb-6">
