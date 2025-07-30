@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-6 left-6 z-50 p-2 bg-gray-800 rounded-lg"
+        className="lg:hidden fixed top-3 left-3 z-50 p-2 bg-gray-800 rounded-lg"
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
         transition={{ duration: 0.8 }}
         className="hidden lg:flex fixed left-0 top-16 bottom-16 w-20 bg-gray-900/95 backdrop-blur-md border-r border-gray-800 z-30"
       >
-        <div className="flex flex-col items-center py-8 space-y-4">
+        <div className="flex flex-col justify-center items-center py-8 pl-4 space-y-4">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
