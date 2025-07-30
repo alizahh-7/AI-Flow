@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Github, Twitter, Linkedin, Coffee, Heart } from "lucide-react";
+import { Github, Twitter, Linkedin, Coffee } from "lucide-react";
 
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="bg-gray-900/95 backdrop-blur-md border-t border-gray-800 text-gray-400 px-6 py-8"
         >
-            <div className="mx-auto lg:ml-20 2xl:mx-auto max-w-6xl ">
+            <div className="mx-auto lg:ml-20 2xl:mx-auto max-w-6xl">
                 <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mb-6">
                     {/* Brand Info */}
                     <div className="max-w-xl">
@@ -65,23 +65,8 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Footer Bottom */}
-                <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row items-center justify-between text-sm">
+                <div className="border-t border-gray-800 pt-6 text-sm text-center">
                     <p>© {currentYear} AI Tools Hub. All rights reserved.</p>
-                    <div className="flex items-center space-x-1">
-                        <span>Made with</span>
-                        <Heart className="w-4 h-4 text-red-500 mx-1" />
-                        <span>
-                            by{" "}
-                            <a
-                                href="https://github.com/Jyotibrat"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-400 hover:text-blue-500 transition-colors"
-                            >
-                                Jyotibrat
-                            </a>
-                        </span>
-                    </div>
                 </div>
             </div>
         </motion.footer>
