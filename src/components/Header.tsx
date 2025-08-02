@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Code, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import UserMenu from './UserMenu';
-import { useAuth } from '../contexts/AuthContext';
-import AuthModal from './AuthModal';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Code, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
+import UserMenu from "./UserMenu";
+import { useAuth } from "../contexts/AuthContext";
+import AuthModal from "./AuthModal";
 
 // Create a motion-wrapped Link component
 const MotionLink = motion(Link);
@@ -52,13 +52,16 @@ const Header: React.FC = () => {
               )}
               <div className="hidden sm:flex px-4 py-2 bg-gray-800 rounded-full text-sm">
                 <span className="text-green-400">●</span>
-                <span className="ml-2 text-gray-300">7 AI Tools Active</span>
+                <span className="ml-2 text-gray-300">8 AI Tools Active</span>
               </div>
             </div>
           </div>
         </div>
       </motion.header>
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </>
   );
 };
