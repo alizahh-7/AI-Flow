@@ -8,6 +8,7 @@ import {
   Code,
   Globe,
   BarChart,
+  Image,
 } from "lucide-react";
 
 import FormattedOutput from "../components/FormattedOutput";
@@ -18,6 +19,7 @@ const AITools: React.FC = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   const tools = [
     {
@@ -28,6 +30,16 @@ const AITools: React.FC = () => {
       placeholder: "Enter your basic prompt...",
       systemPrompt:
         "You are an expert prompt engineer. Transform the user's basic prompt into a detailed, effective prompt that will generate better AI responses. Make it specific, clear, and actionable.",
+    },
+    {
+      id: "image-generator",
+      name: "Image Generator",
+      icon: Image,
+      description: "Turn your ideas into stunning visuals",
+      placeholder:
+        "Describe your image idea (e.g., 'a sunset over snowy mountains')",
+      systemPrompt:
+        "You are a professional AI image generator with deep knowledge of visual composition, art styles, and aesthetics. When the user enters a basic prompt, generate a rich, highly detailed, and vivid description optimized for AI image generation. Incorporate specific visual elements like scene, environment, subjects, actions, colors, lighting, mood, camera angle, and artistic style (e.g., digital painting, photorealism, cyberpunk, anime, 3D render). Avoid vague terms. Be imaginative, cinematic, and precise.",
     },
     {
       id: "summarizer",
@@ -94,42 +106,99 @@ const AITools: React.FC = () => {
   // Fetch Gemini API key from environment variable (Vite style)
   const GEMINI_API_KEY = import.meta.env.VITE_APP_GEMINI_API_KEY || ""; // Make sure .env has VITE_APP_GEMINI_API_KEY
 
-  const processWithAI = async (inputText: string, systemPrompt: string) => {
+  const processWithAI = async (
+    inputText: string,
+    systemPrompt: string,
+    isImage: Boolean
+  ) => {
+    console.log(isImage);
+
     setLoading(true);
+    if (!isImage) {
+      try {
+        const response = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-goog-api-key": GEMINI_API_KEY,
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [{ text: systemPrompt + "\n" + inputText }],
+                },
+              ],
+            }),
+          }
+        );
 
-    try {
-      const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-goog-api-key": GEMINI_API_KEY,
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [{ text: systemPrompt + "\n" + inputText }],
-              },
-            ],
-          }),
+        const data = await response.json();
+        console.log(data); // For debugging
+
+        if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+          setOutput(data.candidates[0].content.parts[0].text);
+        } else if (data?.error?.message) {
+          setOutput(`Gemini API Error: ${data.error.message}`);
+        } else {
+          setOutput("No response from Gemini API.");
         }
-      );
-
-      const data = await response.json();
-      console.log(data); // For debugging
-
-      if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
-        setOutput(data.candidates[0].content.parts[0].text);
-      } else if (data?.error?.message) {
-        setOutput(`Gemini API Error: ${data.error.message}`);
-      } else {
-        setOutput("No response from Gemini API.");
+      } catch (error) {
+        setOutput("Error processing your request. Please try again.");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      setOutput("Error processing your request. Please try again.");
-    } finally {
-      setLoading(false);
+    } else {
+      try {
+        const response = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-goog-api-key": GEMINI_API_KEY,
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: inputText, // Just the image description
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                responseModalities: ["TEXT", "IMAGE"],
+              },
+            }),
+          }
+        );
+
+        const data = await response.json();
+        console.log("Gemini API raw image response:", data);
+
+        const imagePart = data?.candidates?.[0]?.content?.parts?.find(
+          (part: any) => part.inlineData?.data
+        );
+
+        if (imagePart) {
+          const base64Image = imagePart.inlineData.data;
+          const mimeType = imagePart.inlineData.mimeType || "image/png";
+          const imageUrl = `data:${mimeType};base64,${base64Image}`;
+          setImageUrl(imageUrl); // You can use <img src={imageUrl} /> to display it
+        } else if (data?.error?.message) {
+          setOutput(`Gemini API Error: ${data.error.message}`);
+        } else {
+          setOutput("No image returned by Gemini API.");
+        }
+      } catch (error: any) {
+        console.error("Error:", error);
+        setOutput("Failed to generate image. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -138,7 +207,17 @@ const AITools: React.FC = () => {
 
     const tool = tools.find((t) => t.id === selectedTool);
     if (tool) {
-      processWithAI(input, tool.systemPrompt);
+      switch (tool.id) {
+        case "image-generator":
+          processWithAI(input, tool.systemPrompt, true);
+          setOutput("");
+          break;
+
+        default:
+          processWithAI(input, tool.systemPrompt, false);
+          setImageUrl("");
+          break;
+      }
     }
   };
 
@@ -270,6 +349,16 @@ const AITools: React.FC = () => {
                           Output
                         </label>
                         <FormattedOutput content={output} onClear={() => setOutput("")} />
+                      </div>
+                    )}
+                    {imageUrl && (
+                      <div>
+                        <label className="block text-sm font-medium mb-3 text-gray-300">
+                          Output
+                        </label>
+                        <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                          <img src={imageUrl} alt="Generated Image" />
+                        </div>
                       </div>
                     )}
                   </div>
