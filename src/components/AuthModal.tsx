@@ -58,21 +58,34 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    setError('');
+  // const handleGoogleSignIn = async () => {
+  //   setLoading(true);
+  //   setError('');
     
-    try {
-      const { error } = await signInWithGoogle();
-      if (error) {
-        setError(error.message);
-      }
-    } catch (err) {
-      setError('Failed to sign in with Google');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     const { error } = await signInWithGoogle();
+  //     if (error) {
+  //       setError(error.message);
+  //     }
+  //   } catch (err) {
+  //     setError('Failed to sign in with Google');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const handleGoogleSignIn = async () => {
+  setLoading(true);
+  setError('');
+  setSuccess('Redirecting to Google...');
+
+  try {
+    await signInWithGoogle(); // This will redirect
+  } catch (err) {
+    console.error(err);
+    setError('Failed to sign in with Google');
+    setLoading(false); // Will only reach here if redirect fails
+  }
+};
 
   const resetForm = () => {
     setEmail('');
