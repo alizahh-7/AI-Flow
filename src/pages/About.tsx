@@ -1,39 +1,44 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Brain, Target, Users, Award } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Brain, Target, Users, Award } from "lucide-react";
 
 const About: React.FC = () => {
   const tools = [
-    'AI Prompt Enhancer',
-    'AI Summarizer',
-    'SQL Query Explainer',
-    'Regex Generator',
-    'Code Explainer',
-    'Language Translator',
-    'Sentiment Analyzer'
+    "AI Prompt Enhancer",
+    "Image Generator",
+    "AI Summarizer",
+    "SQL Query Explainer",
+    "Regex Generator",
+    "Code Explainer",
+    "Language Translator",
+    "Sentiment Analyzer",
   ];
 
   const values = [
     {
       icon: Brain,
-      title: 'Innovation',
-      description: 'We leverage cutting-edge AI technology to create tools that push the boundaries of what\'s possible.'
+      title: "Innovation",
+      description:
+        "We leverage cutting-edge AI technology to create tools that push the boundaries of what's possible.",
     },
     {
       icon: Target,
-      title: 'Precision',
-      description: 'Our tools are designed with accuracy and reliability in mind, ensuring consistent results every time.'
+      title: "Precision",
+      description:
+        "Our tools are designed with accuracy and reliability in mind, ensuring consistent results every time.",
     },
     {
       icon: Users,
-      title: 'Accessibility',
-      description: 'We believe powerful AI tools should be accessible to everyone, regardless of technical background.'
+      title: "Accessibility",
+      description:
+        "We believe powerful AI tools should be accessible to everyone, regardless of technical background.",
     },
     {
       icon: Award,
-      title: 'Excellence',
-      description: 'We strive for excellence in every aspect of our platform, from user experience to AI performance.'
-    }
+      title: "Excellence",
+      description:
+        "We strive for excellence in every aspect of our platform, from user experience to AI performance.",
+    },
   ];
 
   return (
@@ -68,14 +73,17 @@ const About: React.FC = () => {
           <h2 className="text-3xl font-bold mb-8">Our Mission</h2>
           <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl border border-gray-700">
             <p className="text-lg text-gray-300 leading-relaxed mb-6">
-              At AI Tools Hub, we're dedicated to democratizing access to powerful artificial intelligence tools. 
-              Our mission is to empower individuals and businesses with cutting-edge AI capabilities that enhance 
-              productivity, creativity, and problem-solving.
+              At AI Tools Hub, we're dedicated to democratizing access to
+              powerful artificial intelligence tools. Our mission is to empower
+              individuals and businesses with cutting-edge AI capabilities that
+              enhance productivity, creativity, and problem-solving.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
-              We believe that AI should be accessible, intuitive, and beneficial to everyone. That's why we've 
-              created a comprehensive suite of AI-powered tools that cater to various needs, from content creation 
-              to code analysis, all powered by Google's advanced Gemini 2.0 Flash API.
+              We believe that AI should be accessible, intuitive, and beneficial
+              to everyone. That's why we've created a comprehensive suite of
+              AI-powered tools that cater to various needs, from content
+              creation to code analysis, all powered by Google's advanced Gemini
+              2.0 Flash API.
             </p>
           </div>
         </motion.section>
