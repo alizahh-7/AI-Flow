@@ -16,6 +16,7 @@ import AITools from './pages/AITools';
 import Chatbot from './components/Chatbot';
 import { initGA, trackPageView } from './utils/analytics';
 import { Toaster } from 'react-hot-toast';
+import ScrollToTop from './components/ScrollToTop';
 
 // Create a separate component for analytics tracking
 const AnalyticsTracker: React.FC = () => {
@@ -52,6 +53,7 @@ function App() {
       <Router>
         <AnalyticsTracker />
         <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
+          <ScrollToTop />
           <AnimatePresence mode="wait">
             <Layout>
               <Routes>
