@@ -109,39 +109,48 @@ const Blog: React.FC = () => {
     ) : (
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredPosts.map((post, index) => (
-          <motion.article
+          <a
             key={post.id}
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.6 + index * 0.1, duration: 0.8 }}
-            className="bg-gray-100 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300 dark:border-gray-700 hover:border-blue-500 transition-all duration-300 transform hover:scale-105"
+            href={post.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
           >
-            <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white line-clamp-2">
-              {post.title}
-            </h2>
-            <div className="flex items-center space-x-4 mb-4 text-sm text-gray-500 dark:text-gray-400">
-              <div className="flex items-center space-x-1">
-                <Calendar className="w-4 h-4" />
-                <span>{formatDate(post.published)}</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <User className="w-4 h-4" />
-                <span>{post.author}</span>
-              </div>
-            </div>
-            <a
-              href={post.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors duration-300"
+            <motion.article
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 + index * 0.1, duration: 0.8 }}
+              className="bg-gray-100 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl 
+                        border border-gray-300 dark:border-gray-700 
+                        hover:border-blue-500 dark:hover:border-blue-500 
+                        transition-all duration-300 transform hover:scale-105 cursor-pointer"
             >
-              <span>Read More</span>
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </motion.article>
+              <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white line-clamp-2">
+                {post.title}
+              </h2>
+
+              <div className="flex items-center space-x-4 mb-4 text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex items-center space-x-1">
+                  <Calendar className="w-4 h-4" />
+                  <span>{formatDate(post.published)}</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <User className="w-4 h-4" />
+                  <span>{post.author}</span>
+                </div>
+              </div>
+
+              <div className="inline-flex items-center space-x-2 text-blue-500 dark:text-blue-400 
+                               transition-colors duration-300">
+                <span>Read More</span>
+                <ExternalLink className="w-4 h-4" />
+              </div>
+            </motion.article>
+          </a>
         ))}
       </div>
     )}
+
 
     {!loading && filteredPosts.length === 0 && (
       <motion.div
