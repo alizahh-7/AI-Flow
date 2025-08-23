@@ -1,6 +1,5 @@
 // src/components/FormattedOutput.tsx
 // This component renders AI-generated content with markdown formatting and interactive features
-
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -31,7 +30,7 @@ const FormattedOutput: React.FC<Props> = ({ content, onClear }) => {
       const newHeight = startHeight + (moveEvent.clientY - startY);
       setBoxSize({
         width: Math.max(400, newWidth),
-        height: Math.max(200, newHeight)
+        height: Math.max(200, newHeight),
       });
     };
 
@@ -69,8 +68,8 @@ const FormattedOutput: React.FC<Props> = ({ content, onClear }) => {
         )}
       </div>
 
-      <div className="prose dark:prose-invert max-w-none space-y-4 overflow-auto">
-        {/* ⬇️ Removed pt-8 to reduce excessive top spacing */}
+      <div className="prose dark:prose-invert max-w-none space-y-4 overflow-auto pt-12">
+        {/* Added padding-top to avoid overlap with action buttons */}
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
       </div>
 
