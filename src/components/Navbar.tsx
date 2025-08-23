@@ -88,14 +88,16 @@ const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
           key={item.path}
           to={item.path}
           className={({ isActive }) =>
-            `group flex items-center gap-4 w-full p-3 rounded-xl transition-all duration-300 ${
+            `group flex ${isExpanded ? 'items-center gap-4 w-full p-2' : 'items-center justify-center w-12 h-12'} rounded-xl transition-all duration-300 ${
               isActive
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
                 : 'text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800'
             }`
           }
         >
-          <item.icon className="w-6 h-6" />
+          <span className="w-8 h-8 flex items-center justify-center rounded-lg bg-transparent">
+            <item.icon className="w-6 h-6" />
+          </span>
 
           {isExpanded ? (
             <span className="text-sm font-medium">{item.label}</span>
