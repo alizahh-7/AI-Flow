@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Github, Twitter, Linkedin, Coffee } from "lucide-react";
+import { Github, Linkedin, Coffee } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
+
 
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
@@ -21,7 +23,7 @@ const Footer: React.FC = () => {
         {
             name: "Twitter",
             href: "https://x.com/B_Jyotibrat",
-            icon: Twitter,
+            icon: FaXTwitter ,
             color: "hover:text-white",
         },
         {
