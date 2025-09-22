@@ -30,17 +30,19 @@ const navItems = [
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
- useEffect(() => {
+  const [theme, setTheme] = useState('dark');
+
+  useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-    localStorage.setItem('theme', theme);
+    
   }, [theme]);
-   return (
+   
+  return (
     <>
       {/* Mobile Menu Button */}
       <button
@@ -53,7 +55,7 @@ const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
       {/* Theme Toggle Button */}
       <button
         onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-        className="fixed top-3 right-3 z-50 p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-lg"
+        className="fixed top-4 right-6 z-50 p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-lg"
       >
         {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
       </button>
@@ -63,19 +65,19 @@ const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
         initial={{ x: -100 }}
         animate={{ x: 0 }}
         transition={{ duration: 0.8 }}
-        className={`hidden lg:flex fixed left-0 top-16 bottom-16 
+        className={`hidden lg:flex fixed left-0 top-0 bottom-0 
                     ${isExpanded ? 'w-64' : 'w-20'} 
-                    bg-gray-100 dark:bg-gray-900/95 
-                    backdrop-blur-md border-r border-gray-300 dark:border-gray-800 
+                    bg-gray-100 dark:bg-gray-900 
+                    border-r border-gray-300 dark:border-gray-800 
                     z-30 transition-all duration-300 ease-in-out`}
       >
-        <div className="flex flex-col justify-start py-4 space-y-2 w-full h-full">
+        <div className="flex flex-col justify-start pt-12 pb-4 space-y-2 w-full h-full">
         
         {/* Expand/Collapse Toggle Button */}
         <div className={`flex w-full ${isExpanded ? 'justify-end pr-4' : 'justify-center'}`}>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            className="pt-6 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
           >
             {isExpanded ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -112,7 +114,7 @@ const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
       </div>
       </motion.nav>
 
-      {/* Mobile Navbar */}
+      {/* Mobile Navbar - Fixed with solid background */}
       <AnimatePresence>
         {isOpen && (
           <motion.nav
@@ -121,8 +123,8 @@ const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
             exit={{ x: -300 }}
             transition={{ duration: 0.3 }}
             className="lg:hidden fixed left-0 top-0 bottom-0 w-64 
-                       bg-gray-100 dark:bg-gray-900/95 
-                       backdrop-blur-md border-r border-gray-300 dark:border-gray-800 z-40"
+                       bg-gray-100 dark:bg-gray-900 
+                       border-r border-gray-300 dark:border-gray-800 z-40"
           >
             <div className="pt-20 px-4">
               {navItems.map((item) => (
